@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Misfer Media — AI-Powered Marketing Agency. We build websites, deploy AI receptionists, and engineer growth systems for businesses that refuse to be average."/>
+<title>Misfer Media | AI-Powered Marketing Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a435;
+  --gold-light:#e8c96a;
+  --gold-dim:#8a6f20;
+  --black:#080808;
+  --surface:#0f0f0f;
+  --surface2:#161616;
+  --surface3:#1e1e1e;
+  --white:#f5f0e8;
+  --white-dim:rgba(245,240,232,0.55);
+  --white-faint:rgba(245,240,232,0.12);
+  --border:rgba(201,164,53,0.18);
+  --border-hover:rgba(201,164,53,0.45);
+  --font-display:'Cormorant Garamond',serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--font-body);
+  font-weight:400;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+::selection{background:var(--gold);color:#000}
+a{color:inherit;text-decoration:none}
+
+/* CUSTOM CURSOR */
+#cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transition:transform 0.15s ease,opacity 0.15s ease;
+  transform:translate(-50%,-50%);
+}
+#cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(201,164,53,0.5);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transition:transform 0.4s cubic-bezier(0.23,1,0.32,1),width 0.3s,height 0.3s,border-color 0.3s;
+  transform:translate(-50%,-50%);
+}
+body:hover #cursor{opacity:1}
+
+/* CANVAS PARTICLE */
+#particle-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;opacity:0.55;
+}
+
+/* NOISE OVERLAY */
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.35;pointer-events:none;z-index:1;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#080808}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px}
+
+/* LAYOUT */
+.container{max-width:1280px;margin:0 auto;padding:0 48px;position:relative;z-index:2}
+section{position:relative;z-index:2}
+
+/* ═══════════════════════════════
+   NAVIGATION
+═══════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  padding:24px 0;
+  transition:padding 0.4s ease,background 0.4s ease,border-color 0.4s ease;
+  border-bottom:1px solid transparent;
+}
+nav.scrolled{
+  padding:16px 0;
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom-color:var(--border);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1280px;margin:0 auto;padding:0 48px;
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:1.6rem;font-weight:600;letter-spacing:0.04em;
+  color:var(--white);
+}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:40px}
+.nav-links a{
+  font-size:0.75rem;font-weight:500;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--white-dim);
+  transition:color 0.3s ease;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:var(--gold);transition:width 0.3s ease;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  font-size:0.72rem;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;padding:10px 24px;
+  border:1px solid var(--gold);color:var(--gold);
+  background:transparent;cursor:none;
+  transition:background 0.3s ease,color 0.3s ease,box-shadow 0.3s ease;
+  clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);
+}
+.nav-cta:hover{background:var(--gold);color:#000;box-shadow:0 0 30px rgba(201,164,53,0.3)}
+
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:160px 0 120px;position:relative;overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,164,53,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,164,53,0.04) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black 30%,transparent 100%);
+  animation:gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse{
+  0%,100%{opacity:0.5}50%{opacity:1}
+}
+.hero-glow{
+  position:absolute;top:20%;left:50%;
+  width:700px;height:700px;
+  background:radial-gradient(circle,rgba(201,164,53,0.06) 0%,transparent 70%);
+  transform:translateX(-50%);
+  animation:glowPulse 6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes glowPulse{
+  0%,100%{opacity:0.5;transform:translateX(-50%) scale(1)}
+  50%{opacity:1;transform:translateX(-50%) scale(1.1)}
+}
+.hero-eyebrow{
+  font-family:var(--font-mono);font-size:0.72rem;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  display:flex;align-items:center;gap:16px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.8s 0.2s forwards;
+}
+.hero-eyebrow::before{
+  content:'';display:inline-block;width:40px;height:1px;background:var(--gold);
+}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(3.2rem,7vw,7.2rem);
+  font-weight:300;line-height:1.06;
+  letter-spacing:-0.01em;
+  margin-bottom:36px;
+  opacity:0;transform:translateY(30px);
+  animation:fadeUp 0.9s 0.4s forwards;
+}
+.hero h1 em{font-style:italic;color:var(--gold-light)}
+.hero h1 strong{font-weight:700;display:block}
+.hero-sub{
+  font-size:1.1rem;font-weight:300;
+  color:var(--white-dim);max-width:560px;
+  line-height:1.8;margin-bottom:56px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.9s 0.6s forwards;
+}
+.hero-actions{
+  display:flex;align-items:center;gap:28px;
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.9s 0.8s forwards;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:0.78rem;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;padding:16px 36px;
+  background:var(--gold);color:#000;cursor:none;
+  clip-path:polygon(10px 0%,100% 0%,100% calc(100% - 10px),calc(100% - 10px) 100%,0% 100%,0% 10px);
+  transition:box-shadow 0.3s ease,transform 0.3s ease;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.2) 50%,transparent 70%);
+  transform:translateX(-100%);transition:transform 0.5s ease;
+}
+.btn-primary:hover::before{transform:translateX(100%)}
+.btn-primary:hover{box-shadow:0 0 40px rgba(201,164,53,0.5);transform:translateY(-2px)}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:0.78rem;font-weight:500;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--white-dim);cursor:none;
+  transition:color 0.3s ease;
+}
+.btn-secondary svg{transition:transform 0.3s ease}
+.btn-secondary:hover{color:var(--white)}
+.btn-secondary:hover svg{transform:translateX(6px)}
+.hero-stats{
+  display:flex;gap:60px;margin-top:80px;padding-top:60px;
+  border-top:1px solid var(--border);
+  opacity:0;transform:translateY(20px);
+  animation:fadeUp 0.9s 1.0s forwards;
+}
+.stat-item{}
+.stat-num{
+  font-family:var(--font-display);
+  font-size:3rem;font-weight:600;color:var(--gold);
+  line-height:1;letter-spacing:-0.02em;
+}
+.stat-label{
+  font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--white-dim);margin-top:6px;
+}
+.hero-scroll-hint{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:0.62rem;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dim);
+  opacity:0;animation:fadeUp 1s 1.4s forwards;
+}
+.scroll-line{
+  width:1px;height:50px;background:linear-gradient(var(--gold-dim),transparent);
+  animation:scrollAnim 2s ease-in-out infinite;
+}
+@keyframes scrollAnim{
+  0%{transform:scaleY(0);transform-origin:top}
+  50%{transform:scaleY(1);transform-origin:top}
+  51%{transform:scaleY(1);transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom}
+}
+
+/* ═══════════════════════════════
+   MARQUEE
+═══════════════════════════════ */
+.marquee-section{
+  padding:24px 0;border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;position:relative;z-index:2;
+}
+.marquee-track{
+  display:flex;gap:0;
+  animation:marqueeScroll 22s linear infinite;
+  width:max-content;
+}
+.marquee-item{
+  display:flex;align-items:center;gap:32px;
+  padding:0 40px;
+  font-family:var(--font-mono);font-size:0.68rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--white-dim);white-space:nowrap;
+}
+.marquee-dot{color:var(--gold);font-size:1rem}
+@keyframes marqueeScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* ═══════════════════════════════
+   SECTION HEADERS
+═══════════════════════════════ */
+.section-label{
+  font-family:var(--font-mono);font-size:0.68rem;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+  display:flex;align-items:center;gap:14px;
+}
+.section-label::before{content:'';width:30px;height:1px;background:var(--gold)}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,4.5vw,4.2rem);
+  font-weight:300;line-height:1.12;
+  letter-spacing:-0.01em;
+}
+.section-title em{font-style:italic;color:var(--gold-light)}
+.section-title strong{font-weight:700}
+
+/* ═══════════════════════════════
+   SERVICES
+═══════════════════════════════ */
+.services{padding:140px 0}
+.services-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:end;margin-bottom:100px;
+}
+.services-intro{
+  font-size:1.05rem;font-weight:300;
+  color:var(--white-dim);line-height:1.85;
+  align-self:end;
+}
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);
+}
+.service-card{
+  background:var(--surface);
+  padding:44px 36px;
+  transition:background 0.4s ease,transform 0.4s ease;
+  cursor:none;position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;
+  bottom:0;left:0;width:100%;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.service-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,164,53,0.04) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.4s ease;
+}
+.service-card:hover{background:var(--surface2)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-card:hover::after{opacity:1}
+.service-card.featured{
+  background:var(--surface2);
+  grid-column:span 1;
+}
+.service-icon{
+  width:48px;height:48px;margin-bottom:28px;
+  color:var(--gold);opacity:0.85;
+}
+.service-badge{
+  display:inline-block;
+  font-family:var(--font-mono);font-size:0.6rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  padding:4px 10px;border:1px solid var(--gold);
+  color:var(--gold);margin-bottom:16px;
+}
+.service-num{
+  font-family:var(--font-mono);font-size:0.7rem;
+  color:var(--gold-dim);letter-spacing:0.1em;
+  margin-bottom:16px;display:block;
+}
+.service-name{
+  font-family:var(--font-display);
+  font-size:1.5rem;font-weight:600;
+  line-height:1.2;margin-bottom:14px;
+  color:var(--white);
+}
+.service-desc{
+  font-size:0.88rem;font-weight:300;
+  color:var(--white-dim);line-height:1.8;
+  margin-bottom:24px;
+}
+.service-arrow{
+  color:var(--gold);opacity:0;transform:translateX(-10px);
+  transition:opacity 0.3s ease,transform 0.3s ease;
+}
+.service-card:hover .service-arrow{opacity:1;transform:translateX(0)}
+
+/* ═══════════════════════════════
+   OUTCOMES STRIP
+═══════════════════════════════ */
+.outcomes{
+  padding:100px 0;
+  background:linear-gradient(180deg,var(--black) 0%,var(--surface) 30%,var(--surface) 70%,var(--black) 100%);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.outcomes-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.outcome-item{
+  background:var(--surface);
+  padding:48px 36px;text-align:center;
+  transition:background 0.3s ease;
+}
+.outcome-item:hover{background:var(--surface2)}
+.outcome-icon{
+  width:40px;height:40px;
+  margin:0 auto 20px;color:var(--gold);
+}
+.outcome-title{
+  font-family:var(--font-display);
+  font-size:1.3rem;font-weight:600;
+  margin-bottom:10px;
+}
+.outcome-desc{
+  font-size:0.82rem;font-weight:300;
+  color:var(--white-dim);line-height:1.75;
+}
+
+/* ═══════════════════════════════
+   ABOUT
+═══════════════════════════════ */
+.about{padding:140px 0}
+.about-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:100px;align-items:center;
+}
+.about-visual{
+  position:relative;
+}
+.about-img-frame{
+  width:100%;aspect-ratio:4/5;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.about-img-frame::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(135deg,rgba(201,164,53,0.08) 0%,transparent 50%),
+    repeating-linear-gradient(45deg,rgba(201,164,53,0.03) 0,rgba(201,164,53,0.03) 1px,transparent 1px,transparent 40px);
+}
+.about-year-badge{
+  position:absolute;bottom:-20px;right:-20px;
+  width:120px;height:120px;
+  background:var(--gold);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px);
+}
+.about-year-badge .year{
+  font-family:var(--font-display);
+  font-size:2rem;font-weight:700;color:#000;line-height:1;
+}
+.about-year-badge .since{
+  font-family:var(--font-mono);font-size:0.6rem;
+  letter-spacing:0.15em;color:rgba(0,0,0,0.6);
+  text-transform:uppercase;
+}
+.about-corner{
+  position:absolute;top:-12px;left:-12px;
+  width:40px;height:40px;
+  border-left:2px solid var(--gold);
+  border-top:2px solid var(--gold);
+}
+.about-content{}
+.about-lead{
+  font-family:var(--font-display);
+  font-size:1.8rem;font-weight:300;
+  line-height:1.4;margin:28px 0 28px;
+  color:var(--white);
+}
+.about-lead em{font-style:italic;color:var(--gold-light)}
+.about-body{
+  font-size:0.95rem;font-weight:300;
+  color:var(--white-dim);line-height:1.9;
+  margin-bottom:36px;
+}
+.about-founders{
+  display:flex;gap:28px;margin-top:48px;
+  padding-top:48px;border-top:1px solid var(--border);
+}
+.founder-card{
+  flex:1;
+  padding:24px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  transition:border-color 0.3s ease;
+}
+.founder-card:hover{border-color:var(--gold-dim)}
+.founder-initial{
+  width:50px;height:50px;
+  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:1.2rem;font-weight:700;
+  color:#000;margin-bottom:14px;
+  clip-path:polygon(6px 0%,100% 0%,100% calc(100% - 6px),calc(100% - 6px) 100%,0% 100%,0% 6px);
+}
+.founder-name{
+  font-family:var(--font-display);font-size:1rem;
+  font-weight:600;margin-bottom:4px;
+}
+.founder-role{
+  font-family:var(--font-mono);font-size:0.65rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--gold);
+}
+
+/* ═══════════════════════════════
+   PROCESS
+═══════════════════════════════ */
+.process{
+  padding:140px 0;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.process-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;margin-top:80px;position:relative;
+}
+.process-grid::before{
+  content:'';position:absolute;
+  top:40px;left:calc(12.5% + 16px);
+  right:calc(12.5% + 16px);height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+  z-index:0;
+}
+.process-step{
+  padding:0 24px;text-align:center;
+  position:relative;z-index:1;
+}
+.step-circle{
+  width:80px;height:80px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 28px;
+  transition:border-color 0.3s ease,box-shadow 0.3s ease;
+  color:var(--gold);
+}
+.process-step:hover .step-circle{
+  border-color:var(--gold);
+  box-shadow:0 0 30px rgba(201,164,53,0.2);
+}
+.step-num{
+  font-family:var(--font-mono);font-size:0.62rem;
+  letter-spacing:0.18em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.step-title{
+  font-family:var(--font-display);
+  font-size:1.2rem;font-weight:600;
+  margin-bottom:10px;
+}
+.step-desc{
+  font-size:0.83rem;font-weight:300;
+  color:var(--white-dim);line-height:1.75;
+}
+
+/* ═══════════════════════════════
+   PORTFOLIO
+═══════════════════════════════ */
+.portfolio{padding:140px 0}
+.portfolio-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;margin-bottom:80px;
+}
+.portfolio-list{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+}
+.portfolio-item{
+  background:var(--surface);
+  padding:44px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:none;transition:background 0.3s ease;
+  position:relative;overflow:hidden;
+}
+.portfolio-item::before{
+  content:'';position:absolute;
+  left:0;top:0;width:3px;height:100%;
+  background:var(--gold);transform:scaleY(0);transform-origin:top;
+  transition:transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.portfolio-item:hover{background:var(--surface2)}
+.portfolio-item:hover::before{transform:scaleY(1)}
+.portfolio-info{}
+.portfolio-tag{
+  font-family:var(--font-mono);font-size:0.62rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--gold-dim);margin-bottom:8px;
+}
+.portfolio-name{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:600;margin-bottom:6px;
+}
+.portfolio-url{
+  font-size:0.8rem;color:var(--white-dim);
+  font-weight:300;letter-spacing:0.04em;
+}
+.portfolio-link-icon{
+  width:44px;height:44px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);flex-shrink:0;
+  transition:background 0.3s ease,border-color 0.3s ease;
+}
+.portfolio-item:hover .portfolio-link-icon{
+  background:var(--gold);color:#000;
+  border-color:var(--gold);
+}
+.portfolio-industries{
+  margin-top:80px;padding:60px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+}
+.industries-label{
+  font-family:var(--font-mono);font-size:0.68rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:32px;
+}
+.industries-list{
+  display:flex;flex-wrap:wrap;gap:12px;
+}
+.industry-tag{
+  padding:8px 18px;
+  border:1px solid var(--border);
+  font-size:0.8rem;font-weight:300;
+  color:var(--white-dim);
+  transition:border-color 0.3s,color 0.3s;
+}
+.industry-tag:hover{border-color:var(--gold);color:var(--white)}
+
+/* ═══════════════════════════════
+   WHY US
+═══════════════════════════════ */
+.why-us{
+  padding:140px 0;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+}
+.why-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;margin-top:80px;
+}
+.why-items{display:flex;flex-direction:column;gap:0}
+.why-item{
+  padding:36px 0;border-bottom:1px solid var(--border);
+  display:flex;gap:28px;align-items:flex-start;
+  cursor:none;
+  transition:padding-left 0.3s ease;
+}
+.why-item:hover{padding-left:12px}
+.why-item:first-child{border-top:1px solid var(--border)}
+.why-icon{
+  width:44px;height:44px;flex-shrink:0;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);margin-top:4px;
+  transition:background 0.3s,border-color 0.3s;
+}
+.why-item:hover .why-icon{background:var(--gold);color:#000;border-color:var(--gold)}
+.why-text{}
+.why-title{
+  font-family:var(--font-display);
+  font-size:1.15rem;font-weight:600;margin-bottom:8px;
+}
+.why-desc{
+  font-size:0.88rem;font-weight:300;
+  color:var(--white-dim);line-height:1.8;
+}
+.why-statement{
+  background:var(--black);
+  border:1px solid var(--border);
+  padding:60px 48px;
+  position:relative;
+}
+.why-statement::before{
+  content:'"';position:absolute;
+  top:20px;left:40px;
+  font-family:var(--font-display);
+  font-size:8rem;line-height:1;
+  color:rgba(201,164,53,0.1);
+}
+.statement-text{
+  font-family:var(--font-display);
+  font-size:2rem;font-weight:300;
+  line-height:1.45;
+  font-style:italic;color:var(--white);
+  position:relative;z-index:1;
+}
+.statement-text em{font-style:normal;color:var(--gold-light)}
+.statement-author{
+  margin-top:32px;padding-top:24px;
+  border-top:1px solid var(--border);
+  font-family:var(--font-mono);font-size:0.65rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--gold-dim);
+}
+
+/* ═══════════════════════════════
+   AI SECTION
+═══════════════════════════════ */
+.ai-section{
+  padding:140px 0;overflow:hidden;
+}
+.ai-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.ai-visual{
+  position:relative;
+}
+.ai-screen{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  padding:32px;
+  position:relative;overflow:hidden;
+}
+.ai-screen-header{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:24px;padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.ai-dot{
+  width:10px;height:10px;border-radius:50%;
+}
+.ai-dot.red{background:#ff5f56}
+.ai-dot.yellow{background:#ffbd2e}
+.ai-dot.green{background:#27c93f}
+.ai-screen-title{
+  font-family:var(--font-mono);font-size:0.7rem;
+  letter-spacing:0.12em;color:var(--white-dim);
+  margin-left:8px;
+}
+.ai-chat{display:flex;flex-direction:column;gap:14px}
+.chat-bubble{
+  max-width:80%;padding:12px 16px;
+  font-size:0.82rem;line-height:1.6;
+}
+.chat-bubble.ai{
+  background:rgba(201,164,53,0.08);
+  border:1px solid rgba(201,164,53,0.2);
+  border-radius:0 8px 8px 8px;
+  color:var(--white);
+  align-self:flex-start;
+}
+.chat-bubble.user{
+  background:var(--surface3);
+  border:1px solid var(--border);
+  border-radius:8px 0 8px 8px;
+  color:var(--white-dim);
+  align-self:flex-end;
+}
+.chat-meta{
+  font-family:var(--font-mono);font-size:0.6rem;
+  letter-spacing:0.1em;color:var(--gold-dim);
+  margin-bottom:6px;
+}
+.typing-indicator{
+  display:flex;gap:5px;align-items:center;
+  padding:12px 16px;
+  background:rgba(201,164,53,0.05);
+  border:1px solid rgba(201,164,53,0.15);
+  border-radius:0 8px 8px 8px;
+  width:fit-content;
+}
+.typing-dot{
+  width:7px;height:7px;
+  background:var(--gold);border-radius:50%;
+  animation:typingAnim 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2){animation-delay:0.2s}
+.typing-dot:nth-child(3){animation-delay:0.4s}
+@keyframes typingAnim{
+  0%,60%,100%{transform:translateY(0);opacity:0.4}
+  30%{transform:translateY(-6px);opacity:1}
+}
+.ai-metrics{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-top:16px;
+}
+.ai-metric{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:16px;
+}
+.metric-val{
+  font-family:var(--font-display);
+  font-size:1.8rem;font-weight:600;color:var(--gold);
+  line-height:1;
+}
+.metric-lab{
+  font-size:0.72rem;font-weight:300;
+  color:var(--white-dim);margin-top:4px;
+  letter-spacing:0.04em;
+}
+.ai-glows{
+  position:absolute;
+  top:-40px;right:-40px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(201,164,53,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* ═══════════════════════════════
+   CONTACT
+═══════════════════════════════ */
+.contact{
+  padding:160px 0;
+  border-top:1px solid var(--border);
+}
+.contact-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:100px;
+}
+.contact-cta{
+  font-family:var(--font-display);
+  font-size:clamp(2.2rem,4vw,3.8rem);
+  font-weight:300;line-height:1.12;
+  margin:24px 0 40px;
+}
+.contact-cta em{font-style:italic;color:var(--gold-light)}
+.contact-body{
+  font-size:0.95rem;font-weight:300;
+  color:var(--white-dim);line-height:1.85;
+  margin-bottom:48px;max-width:440px;
+}
+.contact-details{
+  display:flex;flex-direction:column;gap:20px;
+  margin-bottom:48px;
+}
+.contact-row{
+  display:flex;align-items:center;gap:16px;
+  font-size:0.9rem;
+}
+.contact-icon{
+  width:40px;height:40px;flex-shrink:0;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);
+}
+.contact-row a{color:var(--white-dim);transition:color 0.3s}
+.contact-row a:hover{color:var(--gold)}
+.social-links{display:flex;gap:12px}
+.social-btn{
+  width:44px;height:44px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--white-dim);cursor:none;
+  transition:background 0.3s,color 0.3s,border-color 0.3s;
+}
+.social-btn:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+.contact-form{
+  display:flex;flex-direction:column;gap:20px;
+}
+.form-group{position:relative}
+.form-input,.form-textarea{
+  width:100%;background:var(--surface2);
+  border:1px solid var(--border);
+  padding:16px 20px;
+  font-family:var(--font-body);font-size:0.9rem;font-weight:300;
+  color:var(--white);
+  transition:border-color 0.3s ease;
+  outline:none;resize:none;
+  clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--white-faint)}
+.form-input:focus,.form-textarea:focus{border-color:var(--gold)}
+.form-textarea{min-height:130px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+footer{
+  padding:60px 0 40px;
+  border-top:1px solid var(--border);
+  background:var(--surface);
+}
+.footer-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:24px;
+}
+.footer-logo{
+  font-family:var(--font-display);font-size:1.4rem;
+  font-weight:600;color:var(--white);
+}
+.footer-logo span{color:var(--gold)}
+.footer-copy{
+  font-size:0.78rem;font-weight:300;
+  color:var(--white-dim);letter-spacing:0.04em;
+}
+.footer-links{
+  display:flex;gap:28px;
+}
+.footer-links a{
+  font-size:0.75rem;font-weight:300;
+  color:var(--white-dim);
+  transition:color 0.3s;
+}
+.footer-links a:hover{color:var(--gold)}
+
+/* ═══════════════════════════════
+   SCROLL ANIMATIONS
+═══════════════════════════════ */
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 0.8s cubic-bezier(0.23,1,0.32,1),
+             transform 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-5{transition-delay:0.5s}
+
+/* GOLD LINE DECORATION */
+.gold-line{
+  width:60px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-dim));
+  margin:20px 0;
+}
+.gold-line.center{margin:20px auto}
+
+/* ═══════════════════════════════
+   MOBILE MENU (hamburger)
+═══════════════════════════════ */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  cursor:none;padding:4px;
+}
+.hamburger span{
+  display:block;width:24px;height:1.5px;
+  background:var(--white);
+  transition:transform 0.3s,opacity 0.3s;
+}
+.mobile-menu{
+  display:none;position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(8,8,8,0.97);
+  z-index:99;
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:40px;
+  backdrop-filter:blur(20px);
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  font-family:var(--font-display);
+  font-size:2.8rem;font-weight:300;
+  color:var(--white-dim);
+  transition:color 0.3s;
+}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-close{
+  position:absolute;top:28px;right:48px;
+  font-family:var(--font-mono);font-size:0.7rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--white-dim);cursor:none;
+  transition:color 0.3s;
+}
+.mobile-close:hover{color:var(--gold)}
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media(max-width:1024px){
+  .container{padding:0 32px}
+  .nav-inner{padding:0 32px}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .about-inner,.why-grid,.ai-inner,.contact-inner{grid-template-columns:1fr;gap:60px}
+  .outcomes-grid{grid-template-columns:1fr 1fr}
+  .process-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .process-grid::before{display:none}
+  .portfolio-list{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .container{padding:0 20px}
+  .nav-inner{padding:0 20px}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .hero{padding:120px 0 80px}
+  .hero-stats{flex-wrap:wrap;gap:40px}
+  .services-header{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .outcomes-grid{grid-template-columns:1fr 1fr}
+  .process-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;text-align:center}
+  .portfolio-header{flex-direction:column;gap:20px;align-items:flex-start}
+  body{cursor:auto}
+  #cursor,#cursor-ring{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="closeMobile()">✕ Close</span>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#portfolio" onclick="closeMobile()">Work</a>
+  <a href="#process" onclick="closeMobile()">Process</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Misfer<span>.</span>Media</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#portfolio">Work</a>
+      <a href="#process">Process</a>
+      <a href="#why">Why Us</a>
+    </div>
+    <a href="#contact" class="nav-cta">Start a Project</a>
+    <div class="hamburger" onclick="openMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-eyebrow">AI-Powered Marketing Agency — Est. 2022</div>
+    <h1>
+      We don't just<br/>
+      <em>build brands.</em><br/>
+      <strong>We engineer growth.</strong>
+    </h1>
+    <p class="hero-sub">
+      Misfer Media sits at the intersection of AI and aggressive marketing. 
+      We turn business problems into measurable outcomes — faster follow-ups, 
+      more bookings, higher conversions — and we make it look exceptional.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Claim Your Strategy Call
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#portfolio" class="btn-secondary">
+        View Our Work
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Clients Scaled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Industries Served</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3yr</div>
+        <div class="stat-label">Of Proven Results</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10min</div>
+        <div class="stat-label">AI Response Time</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Website Development</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>AI Receptionist</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Digital Marketing</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Lead Generation</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Social Media Management</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Brand Identity</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>AI Automation</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Content Strategy</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Website Development</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>AI Receptionist</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Digital Marketing</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Lead Generation</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Social Media Management</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Brand Identity</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>AI Automation</div>
+    <div class="marquee-item"><span class="marquee-dot">◆</span>Content Strategy</div>
+  </div>
+</div>
+
+<!-- ═══════════ SERVICES ═══════════ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <div class="section-label reveal">What We Do</div>
+        <h2 class="section-title reveal reveal-delay-1">Every service your<br/><em>business needs</em><br/>to dominate.</h2>
+      </div>
+      <p class="services-intro reveal reveal-delay-2">
+        We're not a generalist agency that dabbles in everything. We're a precision team 
+        that has mastered the full stack — from your first impression online to the AI that 
+        closes your leads while you sleep. Businesses don't buy technology. They buy outcomes. 
+        And outcomes are our only currency.
+      </p>
+    </div>
+    <div class="services-grid">
+
+      <!-- Service 1: AI Receptionist (featured) -->
+      <div class="service-card featured reveal">
+        <span class="service-badge">Highest ROI</span>
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="6" width="36" height="28" rx="3"/>
+          <circle cx="24" cy="20" r="6"/>
+          <path d="M14 34c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+          <path d="M34 9l4 4-4 4M40 13h-8"/>
+        </svg>
+        <div class="service-name">AI Receptionist</div>
+        <p class="service-desc">
+          Your business answers every lead in under 10 minutes — 24/7, without hiring staff. 
+          We deploy intelligent AI systems that qualify prospects, book appointments, and follow up 
+          automatically. You stop losing money to slow response times.
+        </p>
+        <svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <!-- Service 2: Website Creation -->
+      <div class="service-card reveal reveal-delay-1">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="8" width="40" height="32" rx="3"/>
+          <path d="M4 16h40"/>
+          <circle cx="11" cy="12" r="2"/>
+          <circle cx="19" cy="12" r="2"/>
+          <path d="M16 28l6-6 4 4 6-8"/>
+        </svg>
+        <div class="service-name">Website Creation</div>
+        <p class="service-desc">
+          Websites built to convert, not just impress. We craft high-performance digital 
+          experiences that load fast, rank in search engines, and turn visitors into paying 
+          clients — built on strategy, not just aesthetics.
+        </p>
+        <svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <!-- Service 3: Digital Marketing -->
+      <div class="service-card reveal reveal-delay-2">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 36l8-12 8 6 8-14 8 8"/>
+          <circle cx="8" cy="36" r="2"/>
+          <circle cx="16" cy="24" r="2"/>
+          <circle cx="24" cy="30" r="2"/>
+          <circle cx="32" cy="16" r="2"/>
+          <circle cx="40" cy="24" r="2"/>
+        </svg>
+        <div class="service-name">Digital Marketing</div>
+        <p class="service-desc">
+          We build marketing systems that generate consistent, qualified leads. Paid ads, 
+          email sequences, SEO, and content — all engineered to stack revenue, not just 
+          impressions. Every dollar tracked. Every result measured.
+        </p>
+        <svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <!-- Service 4: Social Media -->
+      <div class="service-card reveal reveal-delay-1">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="24" r="5"/>
+          <circle cx="36" cy="10" r="5"/>
+          <circle cx="36" cy="38" r="5"/>
+          <path d="M17 21.5l14-9M17 26.5l14 9"/>
+        </svg>
+        <div class="service-name">Social Media Management</div>
+        <p class="service-desc">
+          Presence that builds authority. We manage your social channels with a content strategy 
+          that attracts your ideal clients, builds trust at scale, and keeps your brand top of 
+          mind — while you focus on running your business.
+        </p>
+        <svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <!-- Service 5: Brand Identity -->
+      <div class="service-card reveal reveal-delay-2">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="24,4 30,17 44,17 33,26 37,40 24,32 11,40 15,26 4,17 18,17"/>
+        </svg>
+        <div class="service-name">Brand Identity</div>
+        <p class="service-desc">
+          Your brand is the reason clients choose you over someone cheaper. We design complete 
+          brand identities — logo systems, visual language, tone of voice — that command 
+          premium positioning in your market from day one.
+        </p>
+        <svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+      <!-- Service 6: AI Automation -->
+      <div class="service-card reveal reveal-delay-3">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="18" y="4" width="12" height="8" rx="2"/>
+          <path d="M24 12v6"/>
+          <rect x="4" y="18" width="12" height="8" rx="2"/>
+          <rect x="18" y="18" width="12" height="8" rx="2"/>
+          <rect x="32" y="18" width="12" height="8" rx="2"/>
+          <path d="M10 26v6h28v-6M24 26v6"/>
+          <rect x="18" y="36" width="12" height="8" rx="2"/>
+        </svg>
+        <div class="service-name">AI Automation</div>
+        <p class="service-desc">
+          We map your business operations and remove every manual bottleneck. From CRM workflows 
+          to automated follow-up sequences, we install systems that make your business run 
+          leaner, faster, and more profitably at every stage.
+        </p>
+        <svg class="service-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ OUTCOMES ═══════════ -->
+<div class="outcomes">
+  <div class="container">
+    <div class="section-label reveal" style="justify-content:center;text-align:center">What You Actually Get</div>
+    <h2 class="section-title reveal reveal-delay-1" style="text-align:center;margin-bottom:60px">Outcomes we're obsessed<br/><em>with delivering</em></h2>
+    <div class="outcomes-grid">
+      <div class="outcome-item reveal">
+        <svg class="outcome-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="20" cy="20" r="16"/>
+          <path d="M20 12v8l6 3"/>
+        </svg>
+        <div class="outcome-title">Time Saved</div>
+        <p class="outcome-desc">Fewer manual tasks. Fewer missed leads. Fewer refunds from human error. We remove operational waste so your team focuses on revenue.</p>
+      </div>
+      <div class="outcome-item reveal reveal-delay-1">
+        <svg class="outcome-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 28l7-9 6 5 7-10 4 6"/>
+          <path d="M34 8v8h-8"/>
+        </svg>
+        <div class="outcome-title">Revenue Increased</div>
+        <p class="outcome-desc">More conversions from the same traffic. Higher booking rates. Faster follow-ups that close deals before competitors even respond.</p>
+      </div>
+      <div class="outcome-item reveal reveal-delay-2">
+        <svg class="outcome-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z"/>
+        </svg>
+        <div class="outcome-title">Risk Removed</div>
+        <p class="outcome-desc">Lost leads, missed follow-ups, reputation damage and data chaos cost you silently. We stop the leaks before they cost you clients.</p>
+      </div>
+      <div class="outcome-item reveal reveal-delay-3">
+        <svg class="outcome-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="14" width="28" height="20" rx="2"/>
+          <path d="M14 14v-4a6 6 0 0 1 12 0v4"/>
+          <circle cx="20" cy="24" r="3"/>
+          <path d="M20 27v3"/>
+        </svg>
+        <div class="outcome-title">Growth Stabilised</div>
+        <p class="outcome-desc">Predictable pipeline. Consistent brand. Systems that scale without breaking. Growth that compounds, not fluctuates.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="about-corner"></div>
+        <div class="about-img-frame">
+          <!-- Abstract geometric visual -->
+          <svg width="100%" height="100%" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="goldGrad" cx="50%" cy="40%" r="50%">
+                <stop offset="0%" stop-color="#c9a435" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#c9a435" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="400" height="500" fill="url(#goldGrad)"/>
+            <!-- Grid lines -->
+            <g stroke="rgba(201,164,53,0.06)" stroke-width="1">
+              <line x1="0" y1="100" x2="400" y2="100"/>
+              <line x1="0" y1="200" x2="400" y2="200"/>
+              <line x1="0" y1="300" x2="400" y2="300"/>
+              <line x1="0" y1="400" x2="400" y2="400"/>
+              <line x1="100" y1="0" x2="100" y2="500"/>
+              <line x1="200" y1="0" x2="200" y2="500"/>
+              <line x1="300" y1="0" x2="300" y2="500"/>
+            </g>
+            <!-- Central element -->
+            <polygon points="200,120 280,200 200,280 120,200" fill="none" stroke="rgba(201,164,53,0.3)" stroke-width="1.5"/>
+            <polygon points="200,140 260,200 200,260 140,200" fill="none" stroke="rgba(201,164,53,0.2)" stroke-width="1"/>
+            <circle cx="200" cy="200" r="30" fill="none" stroke="rgba(201,164,53,0.4)" stroke-width="1.5"/>
+            <circle cx="200" cy="200" r="5" fill="rgba(201,164,53,0.8)"/>
+            <!-- Corner markers -->
+            <line x1="120" y1="120" x2="120" y2="140" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="120" y1="120" x2="140" y2="120" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="280" y1="120" x2="280" y2="140" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="280" y1="120" x2="260" y2="120" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="120" y1="280" x2="120" y2="260" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="120" y1="280" x2="140" y2="280" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="280" y1="280" x2="280" y2="260" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <line x1="280" y1="280" x2="260" y2="280" stroke="rgba(201,164,53,0.5)" stroke-width="2"/>
+            <!-- Data lines -->
+            <path d="M60 360 Q130 310 200 330 T340 290" fill="none" stroke="rgba(201,164,53,0.25)" stroke-width="1.5"/>
+            <path d="M60 390 Q130 350 200 370 T340 330" fill="none" stroke="rgba(201,164,53,0.15)" stroke-width="1"/>
+            <!-- Text -->
+            <text x="200" y="450" fill="rgba(201,164,53,0.2)" font-family="Space Mono,monospace" font-size="11" text-anchor="middle" letter-spacing="8">MISFER MEDIA</text>
+          </svg>
+        </div>
+        <div class="about-year-badge">
+          <div class="year">2022</div>
+          <div class="since">Founded</div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-label reveal">Our Story</div>
+        <h2 class="section-title reveal reveal-delay-1">Built by people who<br/><em>understand</em> business.</h2>
+        <p class="about-lead reveal reveal-delay-2">
+          We started Misfer Media because we saw the gap — businesses with <em>real potential</em>, 
+          held back by broken systems and mediocre marketing.
+        </p>
+        <p class="about-body reveal reveal-delay-3">
+          We're an AI-aware, market-aware agency. That means we don't follow trends — we move before them. 
+          We understand that business owners don't care about tools. They care about speed, growth, stability 
+          and results. That's the only lens we use when we take on a client.
+          <br/><br/>
+          From Bahrain to Saudi Arabia and beyond, we've built digital infrastructure for dentists, 
+          restaurants, construction firms, e-commerce brands, influencers, and agencies — each one 
+          treated like a high-stakes investment, not a project ticket.
+        </p>
+        <div class="about-founders reveal reveal-delay-4">
+          <div class="founder-card">
+            <div class="founder-initial">MM</div>
+            <div class="founder-name">Mohammed Misfer</div>
+            <div class="founder-role">Co-Founder & CEO</div>
+          </div>
+          <div class="founder-card">
+            <div class="founder-initial">AR</div>
+            <div class="founder-name">Argh Roy</div>
+            <div class="founder-role">Co-Founder & CTO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ AI SECTION ═══════════ -->
+<section class="ai-section" style="background:var(--surface);border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="ai-inner">
+      <div>
+        <div class="section-label reveal">AI Receptionist</div>
+        <h2 class="section-title reveal reveal-delay-1">Your business never<br/><em>misses a lead</em><br/><strong>again.</strong></h2>
+        <div class="gold-line reveal reveal-delay-2"></div>
+        <p class="about-body reveal reveal-delay-2">
+          Most businesses lose 40–60% of inbound leads to slow response times. 
+          A prospect who doesn't hear back within 10 minutes is already calling your competitor.
+          <br/><br/>
+          Our AI Receptionist captures every inquiry, responds instantly, qualifies intent, 
+          and routes the lead — without any human in the loop. It runs inside your 
+          existing setup and starts working from day one.
+        </p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:32px" class="reveal reveal-delay-3">
+          <div style="padding:10px 20px;border:1px solid var(--border);font-size:0.78rem;font-weight:300;color:var(--white-dim)">✓ 24/7 Availability</div>
+          <div style="padding:10px 20px;border:1px solid var(--border);font-size:0.78rem;font-weight:300;color:var(--white-dim)">✓ Instant Response</div>
+          <div style="padding:10px 20px;border:1px solid var(--border);font-size:0.78rem;font-weight:300;color:var(--white-dim)">✓ Auto-Qualification</div>
+          <div style="padding:10px 20px;border:1px solid var(--border);font-size:0.78rem;font-weight:300;color:var(--white-dim)">✓ Booking Integration</div>
+        </div>
+      </div>
+      <div class="ai-visual reveal reveal-delay-2">
+        <div class="ai-glows"></div>
+        <div class="ai-screen">
+          <div class="ai-screen-header">
+            <div class="ai-dot red"></div>
+            <div class="ai-dot yellow"></div>
+            <div class="ai-dot green"></div>
+            <span class="ai-screen-title">Misfer AI Receptionist — Live</span>
+          </div>
+          <div class="ai-chat">
+            <div>
+              <div class="chat-meta">New Lead — 02:14 AM</div>
+              <div class="chat-bubble user">"Hi, I'm looking for a dentist appointment for tomorrow if possible?"</div>
+            </div>
+            <div>
+              <div class="chat-bubble ai">Hello! I'd love to help you book an appointment. Are you a new or returning patient, and do you have a preference for morning or afternoon?</div>
+            </div>
+            <div>
+              <div class="chat-bubble user">"New patient, morning works best."</div>
+            </div>
+            <div>
+              <div class="chat-bubble ai">Perfect. I have a 9:30 AM slot available tomorrow. I'll send a confirmation to your number — shall I lock that in for you?</div>
+            </div>
+            <div class="typing-indicator">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+          <div class="ai-metrics">
+            <div class="ai-metric">
+              <div class="metric-val">&lt;10s</div>
+              <div class="metric-lab">Avg. First Response</div>
+            </div>
+            <div class="ai-metric">
+              <div class="metric-val">100%</div>
+              <div class="metric-lab">Leads Contacted</div>
+            </div>
+            <div class="ai-metric">
+              <div class="metric-val">3×</div>
+              <div class="metric-lab">Conversion Rate</div>
+            </div>
+            <div class="ai-metric">
+              <div class="metric-val">24/7</div>
+              <div class="metric-lab">Always On</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROCESS ═══════════ -->
+<section class="process" id="process">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-label reveal" style="justify-content:center">How We Work</div>
+      <h2 class="section-title reveal reveal-delay-1" style="max-width:600px;margin:0 auto">A precise process.<br/><em>Zero guesswork.</em></h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="step-circle">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </div>
+        <div class="step-num">01 — Diagnose</div>
+        <div class="step-title">Discovery & Audit</div>
+        <p class="step-desc">We map your current setup — your leads, your bottlenecks, your missed revenue. We name what this costs you in the next 90 days before we recommend a single thing.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-circle">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="step-num">02 — Architect</div>
+        <div class="step-title">Strategy & Scope</div>
+        <p class="step-desc">We define the exact outcome, the mechanism to achieve it, a clear timeline, and a fixed scope. No vague retainers. No moving goalposts. Clarity before a single dollar moves.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-circle">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="step-num">03 — Build</div>
+        <div class="step-title">Execution</div>
+        <p class="step-desc">We build fast and precisely. Internal testing, client review, refinement — all within a tight delivery window because your business cannot afford to wait on results.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-circle">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="step-num">04 — Scale</div>
+        <div class="step-title">Launch & Grow</div>
+        <p class="step-desc">We go live, track the metrics that matter, and expand scope as results compound. Our clients don't churn — because working systems earn loyalty no contract can buy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PORTFOLIO ═══════════ -->
+<section class="portfolio" id="portfolio">
+  <div class="container">
+    <div class="portfolio-header">
+      <div>
+        <div class="section-label reveal">Selected Work</div>
+        <h2 class="section-title reveal reveal-delay-1">Built by us.<br/><em>Driven by results.</em></h2>
+      </div>
+      <p style="max-width:340px;font-size:0.9rem;font-weight:300;color:var(--white-dim);line-height:1.8" class="reveal reveal-delay-2">
+        Every site, system, and campaign below was built to solve a specific business problem — 
+        not to win a design award.
+      </p>
+    </div>
+    <div class="portfolio-list">
+      <a href="https://www.red-engage.com" target="_blank" class="portfolio-item reveal">
+        <div class="portfolio-info">
+          <div class="portfolio-tag">Marketing Agency</div>
+          <div class="portfolio-name">Red Engage</div>
+          <div class="portfolio-url">red-engage.com</div>
+        </div>
+        <div class="portfolio-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+      </a>
+      <a href="https://o3innovations.com" target="_blank" class="portfolio-item reveal reveal-delay-1">
+        <div class="portfolio-info">
+          <div class="portfolio-tag">Tech Innovation</div>
+          <div class="portfolio-name">O3 Innovations</div>
+          <div class="portfolio-url">o3innovations.com</div>
+        </div>
+        <div class="portfolio-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+      </a>
+      <a href="https://perfectsystems-ai.com" target="_blank" class="portfolio-item reveal reveal-delay-1">
+        <div class="portfolio-info">
+          <div class="portfolio-tag">AI Solutions</div>
+          <div class="portfolio-name">Perfect Systems AI</div>
+          <div class="portfolio-url">perfectsystems-ai.com</div>
+        </div>
+        <div class="portfolio-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+      </a>
+      <a href="https://lavaletcompany.com" target="_blank" class="portfolio-item reveal reveal-delay-2">
+        <div class="portfolio-info">
+          <div class="portfolio-tag">Hospitality</div>
+          <div class="portfolio-name">Lavalet Company</div>
+          <div class="portfolio-url">lavaletcompany.com</div>
+        </div>
+        <div class="portfolio-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+      </a>
+      <a href="https://zi2digital.com" target="_blank" class="portfolio-item reveal reveal-delay-3" style="grid-column:span 2">
+        <div class="portfolio-info">
+          <div class="portfolio-tag">Digital Agency</div>
+          <div class="portfolio-name">Zi2 Digital</div>
+          <div class="portfolio-url">zi2digital.com</div>
+        </div>
+        <div class="portfolio-link-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+      </a>
+    </div>
+    <div class="portfolio-industries reveal">
+      <div class="industries-label">Industries We've Served</div>
+      <div class="industries-list">
+        <div class="industry-tag">Dental Clinics</div>
+        <div class="industry-tag">Restaurants & F&B</div>
+        <div class="industry-tag">Construction & Real Estate</div>
+        <div class="industry-tag">E-Commerce</div>
+        <div class="industry-tag">Social Media Influencers</div>
+        <div class="industry-tag">Marketing Agencies</div>
+        <div class="industry-tag">Healthcare</div>
+        <div class="industry-tag">Professional Services</div>
+        <div class="industry-tag">Tech Startups</div>
+        <div class="industry-tag">Hospitality</div>
+        <div class="industry-tag">Retail & Fashion</div>
+        <div class="industry-tag">Personal Brands</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ WHY US ═══════════ -->
+<section class="why-us" id="why">
+  <div class="container">
+    <div class="section-label reveal">Why Misfer Media</div>
+    <h2 class="section-title reveal reveal-delay-1" style="max-width:500px">The difference between<br/>good and <em>exceptional.</em></h2>
+    <div class="why-grid">
+      <div class="why-items">
+        <div class="why-item reveal">
+          <div class="why-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="why-text">
+            <div class="why-title">We sell outcomes, not services</div>
+            <p class="why-desc">We don't hand you a website and disappear. We measure success in booked calls, reduced no-shows, and revenue gained — not deliverable checkboxes.</p>
+          </div>
+        </div>
+        <div class="why-item reveal reveal-delay-1">
+          <div class="why-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="why-text">
+            <div class="why-title">AI-first by design</div>
+            <p class="why-desc">Most agencies are trying to understand AI. We've been deploying it in production for clients since before it was a buzzword. That head start is your competitive advantage.</p>
+          </div>
+        </div>
+        <div class="why-item reveal reveal-delay-2">
+          <div class="why-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="why-text">
+            <div class="why-title">Scope clarity before money moves</div>
+            <p class="why-desc">We define exactly what's included, excluded, and when. No surprise requests, no endless revisions, no 11pm panic messages. Professional from day one.</p>
+          </div>
+        </div>
+        <div class="why-item reveal reveal-delay-3">
+          <div class="why-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="why-text">
+            <div class="why-title">Market awareness is our edge</div>
+            <p class="why-desc">We understand buyer psychology, pricing psychology, and how decisions actually get made. We build your digital presence to speak directly to decision-makers — not their assistants.</p>
+          </div>
+        </div>
+      </div>
+      <div class="why-statement reveal reveal-delay-2">
+        <p class="statement-text">
+          "Here's what you're <em>losing</em>. Here's what we can fix. 
+          And here's exactly what your business looks like 30 days after we do."
+        </p>
+        <div class="statement-author">— Our promise to every client</div>
+        <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:20px">What this means for you</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem;font-weight:300;color:var(--white-dim)">
+              <span style="color:var(--gold);flex-shrink:0;margin-top:2px">▸</span>
+              In 14 days: AI system live, 100% of inbound leads contacted within 10 minutes
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem;font-weight:300;color:var(--white-dim)">
+              <span style="color:var(--gold);flex-shrink:0;margin-top:2px">▸</span>
+              In 30 days: Lead-to-booking conversions measurably higher
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;font-size:0.85rem;font-weight:300;color:var(--white-dim)">
+              <span style="color:var(--gold);flex-shrink:0;margin-top:2px">▸</span>
+              In 90 days: Compounding brand authority and a pipeline that doesn't panic
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <div class="section-label reveal">Get In Touch</div>
+        <h2 class="contact-cta reveal reveal-delay-1">Ready to stop<br/><em>leaving revenue</em><br/>on the table?</h2>
+        <p class="contact-body reveal reveal-delay-2">
+          The next step is simple. Book a strategy call — we map your current setup, 
+          identify where you're bleeding leads, and show you exactly what your business 
+          looks like when those leaks are sealed.
+          <br/><br/>
+          No obligation. No filler. Just clarity.
+        </p>
+        <div class="contact-details reveal reveal-delay-3">
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.45 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 6.29 6.29l.82-.82a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <a href="tel:+966563217197">+966 563 217 197</a>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <a href="mailto:info@misfermedia.com">info@misfermedia.com</a>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <a href="https://www.misfermedia.com" target="_blank">www.misfermedia.com</a>
+          </div>
+        </div>
+        <div class="social-links reveal reveal-delay-4">
+          <a href="https://www.instagram.com/misfer_media/" target="_blank" class="social-btn" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://bh.linkedin.com/in/mohammed-misfer-media" target="_blank" class="social-btn" title="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <input class="form-input" type="text" placeholder="Your Name"/>
+          <input class="form-input" type="text" placeholder="Company"/>
+        </div>
+        <input class="form-input" type="email" placeholder="Email Address"/>
+        <input class="form-input" type="tel" placeholder="Phone Number"/>
+        <select class="form-input" style="cursor:none">
+          <option value="" style="background:#161616">Service of Interest</option>
+          <option value="ai" style="background:#161616">AI Receptionist</option>
+          <option value="web" style="background:#161616">Website Creation</option>
+          <option value="marketing" style="background:#161616">Digital Marketing</option>
+          <option value="social" style="background:#161616">Social Media Management</option>
+          <option value="brand" style="background:#161616">Brand Identity</option>
+          <option value="automation" style="background:#161616">AI Automation</option>
+          <option value="all" style="background:#161616">Full-Service Partnership</option>
+        </select>
+        <textarea class="form-textarea" placeholder="Tell us about your business and what you're trying to solve..."></textarea>
+        <button class="btn-primary" style="width:100%;justify-content:center;border:none;font-family:var(--font-body)" onclick="handleSubmit(this)">
+          Send Message — Start Your Growth
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p style="font-size:0.75rem;font-weight:300;color:var(--white-faint);text-align:center;margin-top:8px">
+          We respond within 24 hours. No spam, ever.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Misfer<span>.</span>Media</div>
+      <p class="footer-copy">© 2025 Misfer Media. All rights reserved. Bahrain — Saudi Arabia</p>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Work</a>
+        <a href="#contact">Contact</a>
+        <a href="mailto:info@misfermedia.com">info@misfermedia.com</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════
+   CURSOR
+═══════════════════════════ */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener('mousemove',e=>{
+  mouseX=e.clientX; mouseY=e.clientY;
+  cursor.style.left=mouseX+'px';
+  cursor.style.top=mouseY+'px';
+});
+(function animateRing(){
+  ringX+=(mouseX-ringX)*0.12;
+  ringY+=(mouseY-ringY)*0.12;
+  ring.style.left=ringX+'px';
+  ring.style.top=ringY+'px';
+  requestAnimationFrame(animateRing);
+})();
+document.querySelectorAll('a,button,.service-card,.portfolio-item,.why-item,.founder-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cursor.style.transform='translate(-50%,-50%) scale(2)';
+    ring.style.width='60px'; ring.style.height='60px';
+    ring.style.borderColor='rgba(201,164,53,0.8)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cursor.style.transform='translate(-50%,-50%) scale(1)';
+    ring.style.width='36px'; ring.style.height='36px';
+    ring.style.borderColor='rgba(201,164,53,0.5)';
+  });
+});
+
+/* ═══════════════════════════
+   NAVBAR SCROLL
+═══════════════════════════ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>60) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+/* ═══════════════════════════
+   REVEAL ON SCROLL
+═══════════════════════════ */
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+reveals.forEach(el=>revealObs.observe(el));
+
+/* ═══════════════════════════
+   PARTICLE CANVAS
+═══════════════════════════ */
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let W,H;
+function resize(){
+  W=canvas.width=window.innerWidth;
+  H=canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+class Particle{
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*W;
+    this.y=Math.random()*H;
+    this.size=Math.random()*1.5+0.3;
+    this.speedX=(Math.random()-0.5)*0.25;
+    this.speedY=(Math.random()-0.5)*0.25;
+    this.opacity=Math.random()*0.4+0.05;
+    this.gold=Math.random()>0.7;
+  }
+  update(){
+    this.x+=this.speedX;
+    this.y+=this.speedY;
+    if(this.x<0||this.x>W||this.y<0||this.y>H) this.reset();
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=this.gold
+      ?`rgba(201,164,53,${this.opacity})`
+      :`rgba(245,240,232,${this.opacity*0.4})`;
+    ctx.fill();
+  }
+}
+
+for(let i=0;i<160;i++) particles.push(new Particle());
+
+/* Connection lines between nearby particles */
+function drawConnections(){
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<100){
+        const alpha=(1-dist/100)*0.08;
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(201,164,53,${alpha})`;
+        ctx.lineWidth=0.5;
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(particles[j].x,particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateParticles(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{p.update();p.draw();});
+  drawConnections();
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ═══════════════════════════
+   COUNTER ANIMATION
+═══════════════════════════ */
+function animateCounter(el,target,suffix,duration){
+  let start=0;
+  const step=target/((duration/16));
+  const timer=setInterval(()=>{
+    start+=step;
+    if(start>=target){start=target;clearInterval(timer);}
+    el.textContent=Math.floor(start)+suffix;
+  },16);
+}
+const statsObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.stat-num').forEach(el=>{
+        const text=el.textContent;
+        if(text.includes('+')){
+          const num=parseInt(text);
+          animateCounter(el,num,'+',1200);
+        } else if(text.includes('yr')){
+          const num=parseInt(text);
+          animateCounter(el,num,'yr',1000);
+        } else if(text.includes('min')){
+          animateCounter(el,10,'min',800);
+        }
+      });
+      statsObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+document.querySelector('.hero-stats')&&statsObs.observe(document.querySelector('.hero-stats'));
+
+/* ═══════════════════════════
+   MOBILE MENU
+═══════════════════════════ */
+function openMobile(){
+  document.getElementById('mobileMenu').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMobile(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ═══════════════════════════
+   FORM SUBMIT
+═══════════════════════════ */
+function handleSubmit(btn){
+  const original=btn.innerHTML;
+  btn.innerHTML='Message Sent ✓ We\'ll be in touch.';
+  btn.style.background='#1a5c2a';
+  btn.style.cursor='default';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML=original;
+    btn.style.background='var(--gold)';
+    btn.disabled=false;
+  },5000);
+}
+
+/* ═══════════════════════════
+   GOLD GLOW ON CARD HOVER (service cards)
+═══════════════════════════ */
+document.querySelectorAll('.service-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    card.style.background=`radial-gradient(200px at ${x}px ${y}px, rgba(201,164,53,0.06), var(--surface2) 60%)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.background='';
+  });
+});
+
+/* Smooth scroll for internal links */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
